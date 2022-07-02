@@ -13,12 +13,12 @@ public class SongsEntityFactory  implements SimpleRepresentationModelAssembler<S
     @SneakyThrows
     @Override
     public void addLinks(EntityModel<Song> resource) {
-//        resource.add(
-//                linkTo(methodOn(SongsController.class).getSong(resource.getContent().getName(),resource.getContent().getArtist()))
-//                        .withSelfRel());
-//
-//        resource.add(linkTo(methodOn(SongsController.class).allsongs())
-//                .withRel("All songs"));
+        resource.add(
+                linkTo(methodOn(SongsController.class).getSong(resource.getContent().getSongId()))
+                        .withSelfRel());
+
+        resource.add(linkTo(methodOn(SongsController.class).allsongs())
+                .withRel("All songs"));
     }
 
 

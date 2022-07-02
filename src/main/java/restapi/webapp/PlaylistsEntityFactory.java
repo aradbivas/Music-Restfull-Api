@@ -8,7 +8,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class playlistsEntityFactory implements SimpleRepresentationModelAssembler<Playlist> {
+public class PlaylistsEntityFactory implements SimpleRepresentationModelAssembler<Playlist> {
 
     @Override
     public void addLinks(EntityModel<Playlist> resource) {

@@ -17,7 +17,7 @@ public class Playlist
 
         @Id @GeneratedValue Long id;
         private String name;
-        @ManyToMany @JsonIgnore private List<Song> songList = new ArrayList<>();
+        @ManyToMany  private List<Song> songList = new ArrayList<>();
         private Date creationDate;
 
         @JsonIgnore @OneToOne private User creator;
