@@ -1,8 +1,8 @@
 package restapi.webapp;
 
-public class UserNotFoundExeption extends RuntimeException{
-    public UserNotFoundExeption(Long id){
-        super("There is not user corresponding to id = " + id);
+public class EntityNotFoundExeption extends RuntimeException{
+    public EntityNotFoundExeption(Long id){
+        super("There is not entity corresponding to id = " + id);
 
         /*
         This custom exception is useless without invocation from one or more controllers
@@ -10,8 +10,8 @@ public class UserNotFoundExeption extends RuntimeException{
         @ControllerAdvice - use the exception in more than one controller
          */
     }
-    public UserNotFoundExeption(String id){
-        super("There is not user corresponding to email = " + id);
+    public EntityNotFoundExeption(String email){
+        super("There is not entity corresponding to email = " + email);
 
         /*
         This custom exception is useless without invocation from one or more controllers

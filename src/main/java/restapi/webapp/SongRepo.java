@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SongRepo extends CrudRepository<Song,Long> {
     List<Song> findByTitle(String title);
-    List<Song> findByScore(int score);
     List<Song> findByLength(String length);
+    List<Song> findSongByScore(Integer score);
 }

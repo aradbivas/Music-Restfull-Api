@@ -11,5 +11,4 @@ public interface UserRepo extends CrudRepository<User,Long> {
     User findByUserName(String UserName);
     List<User> findByEmail(String Email);
     List<User> findByCreationDate(Date date);
-//    List<Playlist> findPlaylistId(String Id);
 }
