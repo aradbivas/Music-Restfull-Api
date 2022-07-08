@@ -17,14 +17,16 @@ public class SongsController {
     SongRepo songRepo;
     SongsEntityFactory songsEntityFactory;
     SongService songService;
+    SongAudioRepo songAudio;
 
 
 
-    public SongsController(SongRepo songRepo, SongsEntityFactory songsEntityFactory,  SongService songService
+    public SongsController(SongRepo songRepo, SongsEntityFactory songsEntityFactory, SongService songService, SongAudioRepo songAudio
     ) {
         this.songRepo = songRepo;
         this.songsEntityFactory = songsEntityFactory;
         this.songService = songService;
+        this.songAudio = songAudio;
     }
 
     /**
@@ -94,7 +96,7 @@ public class SongsController {
     public ResponseEntity<EntityModel<Song>> addSong(@RequestBody Song song)
     {
 
-            Song song1 = new Song(song.getTitle(),song.getLength(),song.getScore());
+            Song song1 = new Song(song.getTitle(),song.getLength(),song.getScore(),song.getAudio());
             songRepo.save(song1);
             return songRepo.findById(song1.getSongId()).map(songsEntityFactory::toModel).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
 
@@ -136,10 +138,15 @@ public class SongsController {
     @GetMapping("song/findsong/{songName}/{artistName}")
     public ResponseEntity<EntityModel<Song>> getSong(@PathVariable String songName, @PathVariable String artistName) throws ExecutionException, InterruptedException {
 
-        CompletableFuture<SongTrackResponse> song = songService.userDetails(songName,artistName);
+        CompletableFuture<SongTrackResponse> song = songService.songDetails(songName,artistName);
         CompletableFuture.completedFuture(song).join();
+        CompletableFuture<First> audio = songService.songAudio(songName,artistName);
+        CompletableFuture.completedFuture(audio).join();
+        SongAudio audio1 = audio.get().getYoutube().getSongAudio().get(0);
         Song song1 = song.get().recordings.get(0);
         songRepo.save(song1);
+        song1.setAudio(audio.get().getYoutube().getSongAudio().get(0));
+
         return songRepo.findById(song1.getSongId()).map(songsEntityFactory::toModel).map(ResponseEntity::ok) //
                 .orElse(ResponseEntity.notFound().build());
     }
